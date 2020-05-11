@@ -7,6 +7,7 @@ router.get('/hello', function(req, res, next) {
 });
 
 router.use('/test', require('./test'))
+router.use('/user', require('./user'))
 
 router.all('*', function(req, res, next) {
   next(createError(404, '존재하지 않는 api 입니다.'));
