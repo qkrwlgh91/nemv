@@ -35,3 +35,36 @@ app.use(function(err, req, res, next) {
 });
 
 module.exports = app;
+
+const mongoose = require('mongoose')
+// const User = require('./models/users')
+
+mongoose.connect('mongodb://localhost:27017/nemv', { useUnifiedTopology: true }, (err) => {
+  if (err) return console.error(err)
+  console.log('mongoose connected!')
+})
+
+// User.deleteMany()
+//   .then(r => console.log(r))
+//   .catch(e => console.error(e))
+
+// User.create({ name: '하하' })
+//   .then(r => console.log(r))
+//   .catch(e => console.error(e))
+
+// User.find()
+//   .then(r => console.log(r))
+//   .catch(e => console.error(e))
+
+// User.updateOne({ _id: '5eba2c8ad96d404a80016226' }, { $set: { age: 35 } })
+//   .then(r => {
+//     console.log('update')
+//     console.log(r)
+//     return User.find()
+//   })
+//   .then(r => console.log(r))
+//   .catch(e => console.error(e))
+
+// User.deleteOne({ name: '하하' })
+//   .then(r => console.log(r))
+//   .catch(e => console.error(e))
