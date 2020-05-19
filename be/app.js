@@ -11,7 +11,7 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(cors());
+if (process.env.NODE_ENV !== 'production') app.use(cors());
 app.use('/api', require('./routes/api'));
 
 // console.log(path.join(__dirname, '../', 'fe', 'dist'));
@@ -68,3 +68,5 @@ mongoose.connect('mongodb://localhost:27017/nemv', { useUnifiedTopology: true },
 // User.deleteOne({ name: '하하' })
 //   .then(r => console.log(r))
 //   .catch(e => console.error(e))
+
+console.log(process.env.NODE_ENV)
