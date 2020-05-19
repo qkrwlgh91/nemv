@@ -14,14 +14,13 @@ module.exports = {
 
   deploy : {
     production : {
-      user : 'SSH_USERNAME',
-      host : 'SSH_HOSTMACHINE',
+      user : 'root',
+      host : '52.15.107.112',
+      key : '~/nemv.pem',
       ref  : 'origin/master',
-      repo : 'GIT_REPOSITORY',
-      path : 'DESTINATION_PATH',
-      'pre-deploy-local': '',
-      'post-deploy' : 'npm install && pm2 reload ecosystem.config.js --env production',
-      'pre-setup': ''
+      repo : 'git@github.com:qkrwlgh91/nemv.git',
+      path : '/var/www/nemv',
+      'post-deploy' : 'yarn pm2'
     }
   }
 };
