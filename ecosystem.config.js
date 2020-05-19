@@ -16,7 +16,7 @@ module.exports = {
     pr : {
       user : 'root',
       host : '52.15.107.112',
-      key : '~/nemv.pem',
+      key : '~/keys/nemv.pem',
       ref  : 'origin/master',
       repo : 'git@github.com:qkrwlgh91/nemv.git',
       path : '/var/www/nemv',
