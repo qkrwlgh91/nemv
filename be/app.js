@@ -34,12 +34,16 @@ app.use(function(err, req, res, next) {
   res.send({ msg: err.message })
 });
 
-module.exports = app;
+
+const cfg = require('../config')
+console.log(cfg);
 
 const mongoose = require('mongoose')
 // const User = require('./models/users')
 
-mongoose.connect('mongodb://localhost:27017/nemv', { useUnifiedTopology: true }, (err) => {
+console.log(`${process.env.NODE_ENV} started! `)
+
+mongoose.connect(cfg.dbUrl, { useUnifiedTopology: true }, (err) => {
   if (err) return console.error(err)
   console.log('mongoose connected!')
 })
@@ -69,4 +73,5 @@ mongoose.connect('mongodb://localhost:27017/nemv', { useUnifiedTopology: true },
 //   .then(r => console.log(r))
 //   .catch(e => console.error(e))
 
-console.log(process.env.NODE_ENV)
+
+module.exports = app;
