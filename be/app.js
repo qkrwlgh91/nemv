@@ -75,3 +75,14 @@ mongoose.connect(cfg.dbUrl, { useUnifiedTopology: true }, (err) => {
 
 
 module.exports = app;
+
+var jwt = require('jsonwebtoken');
+const key = '베리베리어려운키'
+var token = jwt.sign({ id: 'tester', email: 'tester@naver.com' }, key);
+console.log(token);
+
+var decoded = jwt.verify(token, key) //, (err) => {
+//   if (err) return console.log(err);
+// });
+console.log(decoded) // bar
+console.log(new Date(decoded.iat * 1000));
