@@ -14,7 +14,7 @@ module.exports = {
 
   deploy : {
     pr : {
-      user : 'root',
+      user : 'ec2-user',
       host : '52.15.107.112',
       key : '~/keys/nemv.pem',
       ref  : 'origin/master',
