@@ -76,8 +76,8 @@ mongoose.connect(cfg.dbUrl, { useUnifiedTopology: true }, (err) => {
 
 module.exports = app;
 
-var jwt = require('jsonwebtoken');
-const key = '베리베리어려운키'
+// var jwt = require('jsonwebtoken');
+// const key = '베리베리어려운키'
 
 // var token = jwt.sign({ id: 'tester', email: 'tester@naver.com' }, key);
 // console.log(token);
@@ -135,23 +135,23 @@ const key = '베리베리어려운키'
 //   }
 // })
 
-const signToken = (u, k) => {
-  return new Promise((resolve, reject) => {
-    jwt.sign({ name: u.name, age: u.age }, k, (err, token) => {
-      if (err) reject(err)
-      resolve(token)
-    })
-  })
-}
-
-const verifyToken = (t, k) => {
-  return new Promise((resolve, reject) => {
-    jwt.verify(t, k, (err, v) => {
-      if (err) reject(err)
-      resolve(v)
-    })
-  })
-}
+// const signToken = (u, k) => {
+//   return new Promise((resolve, reject) => {
+//     jwt.sign({ name: u.name, age: u.age }, k, (err, token) => {
+//       if (err) reject(err)
+//       resolve(token)
+//     })
+//   })
+// }
+//
+// const verifyToken = (t, k) => {
+//   return new Promise((resolve, reject) => {
+//     jwt.verify(t, k, (err, v) => {
+//       if (err) reject(err)
+//       resolve(v)
+//     })
+//   })
+// }
 
 // 프라미스
 // let user
