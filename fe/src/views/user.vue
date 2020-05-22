@@ -356,7 +356,7 @@ export default {
     },
     putUser () {
       this.dialog = false
-      axios.put(`${this.$apiRootPath}/${this.putId}`, {
+      axios.put(`${this.$apiRootPath}${this.putId}`, {
         name: this.userName, age: this.userAge
       })
         .then((r) => {
@@ -368,7 +368,7 @@ export default {
         })
     },
     delUser (id) {
-      axios.delete(`${this.$apiRootPath}/${id}`)
+      axios.delete(`${this.$apiRootPath}${id}`)
         .then((r) => {
           this.pop('사용자 삭제 완료')
           this.getUsers()
