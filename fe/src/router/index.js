@@ -22,6 +22,11 @@ const routes = [
     path: '/header',
     name: '헤더',
     component: () => import('../views/header.vue')
+  },
+  {
+    path: '/sign',
+    name: '로그인',
+    component: () => import('../views/sign.vue')
   }
 ]
 
