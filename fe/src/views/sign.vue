@@ -70,8 +70,13 @@ export default {
     signIn () {
       console.log(`${this.$apiRootPath}sign/in`)
       axios.post(`${this.$apiRootPath}sign/in`, this.form)
-        .then(r => console.log(r.data))
-        .catch(e => console.log(e.message))
+        .then(r => {
+          if (!r.data.success) return console.error(r.data.msg)
+          localStorage.setItem('token', r.data.token)
+          this.$router.push('/header')
+          // location.href('/header')
+        })
+        .catch(e => console.error(e.message))
     }
   }
 }

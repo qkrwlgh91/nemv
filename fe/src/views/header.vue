@@ -6,6 +6,8 @@
     <v-btn @click="lsRead">로컬스토리지 읽기</v-btn>
     <v-btn @click="lsRemove">로컬스토리지 지우기</v-btn>
     <v-btn @click="lsClear">로컬스토리지 전체삭제</v-btn>
+    <v-btn @click="apiWithToken">토큰과 함께 전송</v-btn>
+    <v-btn @click="apiWithTrash">이상한 문자와 함께 전송</v-btn>
   </v-container>
 </template>
 
@@ -38,6 +40,17 @@ export default {
     },
     lsClear () {
       localStorage.clear()
+    },
+    apiWithToken () {
+      const token = localStorage.getItem('token')
+      axios.get(`${this.$apiRootPath}test`, { headers: { Authorization: token } })
+        .then(r => console.log(r.data))
+        .catch(e => console.log(e.message))
+    },
+    apiWithTrash () {
+      axios.get(`${this.$apiRootPath}test`, { headers: { Authorization: 'error' } })
+        .then(r => console.log(r.data))
+        .catch(e => console.log(e.message))
     }
   }
 }
