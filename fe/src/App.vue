@@ -40,10 +40,10 @@
             </v-btn>
           </template>
           <v-list>
-            <v-list-item @click="$router.push('sign')">
+            <v-list-item v-if="!$store.state.token" @click="$router.push('sign')">
               <v-list-item-title>로그인</v-list-item-title>
             </v-list-item>
-            <v-list-item @click="signOut">
+            <v-list-item v-else @click="signOut">
               <v-list-item-title>로그아웃</v-list-item-title>
             </v-list-item>
           </v-list>
@@ -54,7 +54,7 @@
       <router-view/>
     </v-content>
     <v-footer fixed app>
-      <span>&copy; 2020</span>
+      <span>&copy; 2020 {{ $store.state.token }}</span>
     </v-footer>
   </v-app>
 </template>
@@ -93,7 +93,8 @@ export default {
   },
   methods: {
     signOut () {
-      localStorage.removeItem('token')
+      // localStorage.removeItem('token')
+      this.$store.commit('delToken')
       this.$router.push('/')
     }
   }
