@@ -15,7 +15,7 @@ router.get('/', function(req, res, next) {
 
 router.put('/:_id', (req, res, next) => {
   const _id = req.params._id
-  User.updateOne({ _id }, { $set: req.body })
+  User.updateOne({ _id }, { $set: req.body})
     .then(r => {
       res.send({ success: true, msg: r })
     })
@@ -36,7 +36,7 @@ router.delete('/:_id', (req, res, next) => {
 })
 
 router.all('*', function(req, res, next) {
-  next(createError(404, '존재하지 않는 페이지 입니다.'))
-})
+  next(createError(404, '존재하지 않는 user page'));
+});
 
 module.exports = router;

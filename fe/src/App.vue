@@ -67,9 +67,30 @@ export default {
       drawer: null,
       items: [{
         icon: 'home',
-        title: '홈',
+        title: 'lv0',
         to: {
           path: '/'
+        }
+      },
+      {
+        icon: 'home',
+        title: 'lv1',
+        to: {
+          path: '/lv1'
+        }
+      },
+      {
+        icon: 'home',
+        title: 'lv2',
+        to: {
+          path: '/lv2'
+        }
+      },
+      {
+        icon: 'home',
+        title: 'lv3',
+        to: {
+          path: '/lv3'
         }
       },
       {
@@ -81,9 +102,9 @@ export default {
       },
       {
         icon: 'face',
-        title: 'header',
+        title: '페이지관리',
         to: {
-          path: '/header'
+          path: '/page'
         }
       }],
       title: this.$apiRootPath // 'Vuetify.js'
