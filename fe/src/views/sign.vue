@@ -68,7 +68,6 @@ export default {
   },
   methods: {
     signIn () {
-      console.log(`${this.$apiRootPath}sign/in`)
       axios.post(`${this.$apiRootPath}sign/in`, this.form)
         .then(r => {
           if (!r.data.success) return console.error(r.data.msg)
