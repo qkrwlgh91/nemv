@@ -5,6 +5,7 @@ const Page = require('../../../models/pages')
 
 router.post('/', function(req, res, next) {
   const { name } = req.body
+  console.log('req.body :' + req.body)
   Page.findOne({ name })
     .then((r) => {
       console.log('r : ' + r)
