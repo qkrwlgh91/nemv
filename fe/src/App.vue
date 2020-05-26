@@ -1,5 +1,5 @@
 <template>
-  <v-app>
+  <v-app :dark="siteDark">
     <v-navigation-drawer
       persistent
       v-model="drawer"
@@ -27,7 +27,7 @@
       app
     >
       <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
-      <v-toolbar-title v-text="title"></v-toolbar-title>
+      <v-toolbar-title v-text="siteTitle"></v-toolbar-title>
       <v-spacer></v-spacer>
       <v-toolbar-items>
         <v-menu bottom left>
@@ -54,7 +54,7 @@
       <router-view/>
     </v-content>
     <v-footer fixed app>
-      <span>&copy; 2020 {{ $store.state.token }}</span>
+      <span>&copy; {{ siteCopyRight }}</span>
     </v-footer>
   </v-app>
 </template>
@@ -65,6 +65,9 @@ export default {
   data () {
     return {
       drawer: null,
+      siteTitle: '미정',
+      siteCopyRight: '2020 JH',
+      siteDark: false,
       items: [{
         icon: 'home',
         title: 'lv0',
@@ -106,13 +109,29 @@ export default {
         to: {
           path: '/page'
         }
+      },
+      {
+        icon: 'face',
+        title: '사이트관리',
+        to: {
+          path: '/site'
+        }
       }],
       title: this.$apiRootPath // 'Vuetify.js'
     }
   },
   mounted () {
+    this.getSite()
   },
   methods: {
+    getSite () {
+      this.$axios.get('site')
+        .then(r => {
+          this.siteTitle = r.data.d.title
+          this.siteCopyRight = r.data.d.copyright
+          this.siteDark = r.data.d.dark
+        })
+    },
     signOut () {
       // localStorage.removeItem('token')
       this.$store.commit('delToken')

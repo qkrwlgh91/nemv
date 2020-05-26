@@ -9,6 +9,7 @@ router.all('*', function(req, res, next) {
 
 router.use('/user', require('./user'))
 router.use('/page', require('./page'))
+router.use('/site', require('./site'))
 
 router.all('*', function(req, res, next) {
   next(createError(404, '존재하지 않는 manage page'));
