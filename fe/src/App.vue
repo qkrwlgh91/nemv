@@ -40,9 +40,14 @@
             </v-btn>
           </template>
           <v-list>
-            <v-list-item v-if="!$store.state.token" @click="$router.push('../sign')">
-              <v-list-item-title>로그인</v-list-item-title>
-            </v-list-item>
+            <template v-if="!$store.state.token">
+              <v-list-item @click="$router.push('../sign')">
+                <v-list-item-title>로그인</v-list-item-title>
+              </v-list-item>
+              <v-list-item @click="$router.push('../register')">
+                <v-list-item-title>회원가입</v-list-item-title>
+              </v-list-item>
+            </template>
             <v-list-item v-else @click="signOut">
               <v-list-item-title>로그아웃</v-list-item-title>
             </v-list-item>
