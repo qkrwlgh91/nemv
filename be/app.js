@@ -198,3 +198,11 @@ module.exports = app;
 // User.deleteMany({})
 //   .then(r => console.log(r))
 //   .catch(err => console.error(err))
+
+// const crypto = require('crypto');
+// // Using the factory defaults.
+// const key1 = crypto.scryptSync('secret', 'salt', 64);
+// console.log(key1.toString('hex'));  // '3745e48...08d59ae'
+// // Using a custom N parameter. Must be a power of two.
+// const key2 = crypto.scryptSync('secret', 'salt', 64, { N: 1024 });
+// console.log(key2.toString('hex'));  // '3745e48...aa39b34'
