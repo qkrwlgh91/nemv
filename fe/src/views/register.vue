@@ -28,10 +28,10 @@
             <v-card-text>
               <ValidationObserver ref="observer" v-slot="{ validate, reset }">
                 <form>
-                  <ValidationProvider v-slot="{ errors }" name="Name" rules="required|mind:5|max:15">
+                  <ValidationProvider v-slot="{ errors }" name="Name" rules="required|min:5|max:10">
                     <v-text-field
                       v-model="name"
-                      :counter="15"
+                      :counter="10"
                       :error-messages="errors"
                       label="Name"
                       required
@@ -116,7 +116,6 @@ export default {
     ],
     checkbox: null
   }),
-
   methods: {
     submit () {
       this.$refs.observer.validate()
