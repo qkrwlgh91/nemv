@@ -140,7 +140,7 @@ export default {
     signOut () {
       // localStorage.removeItem('token')
       this.$store.commit('delToken')
-      this.$router.push('/')
+      this.$router.push('/sign')
     }
   }
 }

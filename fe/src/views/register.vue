@@ -100,7 +100,7 @@
       <v-btn
         :color="sb.color"
         text
-        @click="snackbar = false"
+        @click="sb.act = false"
       >
         닫기
       </v-btn>
