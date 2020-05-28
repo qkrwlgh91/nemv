@@ -140,6 +140,15 @@ export default new VueRouter({
       path: '/block/:msg',
       name: '차단',
       component: () => import('../views/block.vue')
+    },
+    {
+      path: '/users',
+      name: '사용자co',
+      // route level code-splitting
+      // this generates a separate chunk (about.[hash].js) for this route
+      // which is lazy-loaded when the route is visited.
+      component: () => import(/* webpackChunkName: "about" */ '../views/users.vue'),
+      beforeEnter: pageCheck
     }
   ]
 })

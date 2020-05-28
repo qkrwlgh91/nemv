@@ -121,6 +121,13 @@ export default {
         to: {
           path: '/site'
         }
+      },
+      {
+        icon: 'face',
+        title: '사용자관리 components',
+        to: {
+          path: '/users'
+        }
       }],
       title: this.$apiRootPath // 'Vuetify.js'
     }
