@@ -7,5 +7,7 @@
     "pr": "cd fe && yarn && yarn build && cd ../be && yarn && cd .. && NODE_ENV=production PORT=80 node ./be/bin/www",
     "pm2": "cd fe && yarn && yarn build && cd ../be && yarn && cd .. && pm2 start --env pr"
   },
-  "dependencies": {}
+  "dependencies": {
+    "moment": "^2.26.0"
+  }
 }
