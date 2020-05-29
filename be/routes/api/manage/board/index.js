@@ -15,7 +15,7 @@ router.get('/', function(req, res, next) {
 
 router.put('/:_id', (req, res, next) => {
   const _id = req.params._id
-  Page.updateOne({ _id }, { $set: req.body })
+  Page.updateOne({ _id }, { $set: req.body})
     .then(r => {
       res.send({ success: true, msg: r, token: req.token })
     })
@@ -28,7 +28,7 @@ router.delete('/:_id', (req, res, next) => {
   const _id = req.params._id
   Page.deleteOne({ _id })
     .then(r => {
-      res.send({ success: true, msg: r, token: req.token })
+      res.send({ success: true, msg: r, toekn: req.token })
     })
     .catch(e => {
       res.send({ success: false, msg: e.message })
