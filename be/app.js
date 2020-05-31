@@ -206,3 +206,20 @@ module.exports = app;
 // // Using a custom N parameter. Must be a power of two.
 // const key2 = crypto.scryptSync('secret', 'salt', 64, { N: 1024 });
 // console.log(key2.toString('hex'));  // '3745e48...aa39b34'
+
+const Board = require('./models/boards')
+const Article = require('./models/articles')
+
+// User.findOne()
+//   .then(r => console.log(r.id, r._id)) // 5ece1b7c8d050eb990253d0b
+//
+// Board.findOne()
+//   .then(r => console.log(r.name, r._id)) // 5ed39a5c08737ddb42144ea9
+
+// Article.create({ title: 'test board', content: 'It is the t/est board1', _user: '5ece1b7c8d050eb990253d0b', _board: '5ed39a5c08737ddb42144ea9' })
+//     .then(r => console.log(r))
+
+Article.find({ _board: '5ed39a5c08737ddb42144ea9' })
+  .populate('_user', 'name')
+  .populate('_board')
+  .then(r => console.log(r))
