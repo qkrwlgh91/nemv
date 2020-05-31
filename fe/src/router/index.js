@@ -54,27 +54,27 @@ export default new VueRouter({
   base: process.env.BASE_URL,
   routes: [
     {
-      path: '/',
-      name: 'lv0',
-      component: () => import('../views/lv0'),
+      path: '/test/lv0',
+      name: 'testLv0',
+      component: () => import('../views/test/lv0'),
       beforeEnter: pageCheck
     },
     {
-      path: '/lv1',
-      name: 'lv1',
-      component: () => import('../views/lv1'),
+      path: '/test/lv1',
+      name: 'testLv1',
+      component: () => import('../views//test/lv1'),
       beforeEnter: pageCheck
     },
     {
-      path: '/lv2',
-      name: 'lv2',
-      component: () => import('../views/lv2'),
+      path: '/test/lv2',
+      name: 'testLv2',
+      component: () => import('../views//test/lv2'),
       beforeEnter: pageCheck
     },
     {
-      path: '/lv3',
-      name: 'lv3',
-      component: () => import('../views/lv3'),
+      path: '/test/lv3',
+      name: 'testLv3',
+      component: () => import('../views/test/lv3'),
       beforeEnter: pageCheck
     },
     {
@@ -112,15 +112,15 @@ export default new VueRouter({
       beforeEnter: pageCheck
     },
     {
-      path: '/page',
-      name: '페이지',
-      component: () => import('../views/page'),
+      path: '/manage/page',
+      name: 'manage페이지',
+      component: () => import('../views/manage/page'),
       beforeEnter: pageCheck
     },
     {
-      path: '/site',
-      name: '사이트',
-      component: () => import('../views/site'),
+      path: '/manage/site',
+      name: 'manage사이트',
+      component: () => import('../views/manage/site'),
       beforeEnter: pageCheck
     },
     // {
@@ -141,12 +141,12 @@ export default new VueRouter({
       component: () => import('../views/block.vue')
     },
     {
-      path: '/users',
-      name: '사용자co',
+      path: '/manage/users',
+      name: 'manageUsers',
       // route level code-splitting
       // this generates a separate chunk (about.[hash].js) for this route
       // which is lazy-loaded when the route is visited.
-      component: () => import(/* webpackChunkName: "about" */ '../views/users.vue'),
+      component: () => import(/* webpackChunkName: "about" */ '../views/manage/users.vue'),
       beforeEnter: pageCheck
     },
     {
