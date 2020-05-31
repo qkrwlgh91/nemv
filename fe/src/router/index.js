@@ -148,6 +148,12 @@ export default new VueRouter({
       // which is lazy-loaded when the route is visited.
       component: () => import(/* webpackChunkName: "about" */ '../views/users.vue'),
       beforeEnter: pageCheck
+    },
+    {
+      path: '/manage/boards',
+      name: 'manageBoards',
+      component: () => import('../views/manage/boards.vue'),
+      beforeEnter: pageCheck
     }
   ]
 })

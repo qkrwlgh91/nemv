@@ -128,6 +128,13 @@ export default {
         to: {
           path: '/users'
         }
+      },
+      {
+        icon: 'settings',
+        title: '게시판관리 ',
+        to: {
+          path: '/manage/boards'
+        }
       }],
       title: this.$apiRootPath // 'Vuetify.js'
     }
