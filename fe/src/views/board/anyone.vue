@@ -21,8 +21,27 @@
           </v-img>
         </v-card>
       </v-col>
-      <v-col xs="12" sm="6" md="4" v-for="article in articles" :key="article._id">
+      <!-- <v-col xs="12" sm="6" md="4" v-for="article in articles" :key="article._id">
         {{article}}
+      </v-col> -->
+      <v-col xs="12">
+        <v-data-table
+          :headers="headers"
+          :items="articles"
+          :options.sync="pagination"
+          footer-props.items-per-page-text=""
+          :loading="loading"
+          class="text-no-wrap"
+          sort-by
+          >
+          <template slot="items" slot-scope="props">
+            <td :class="headers[0].class">{{ id2date(props.item._id) }}</td>
+            <td :class="headers[1].class">{{ props.item.title }}</td>
+            <td :class="headers[2].class">{{ props.item._user ? props.item._user.name : '손님' }}</td>
+            <td :class="headers[3].class">{{ props.item.cnt.view }}</td>
+            <td :class="headers[4].class">{{ props.item.cnt.like }}</td>
+          </template>
+        </v-data-table>
       </v-col>
     </v-row>
 
@@ -109,7 +128,17 @@ export default {
         act: false,
         msg: '',
         color: 'error'
-      }
+      },
+      headers: [
+        { text: '날짜', value: '_id', sortable: true, class: 'hidden-sm-and-down' },
+        { text: '제목', value: 'title', sortable: true },
+        { text: '글쓴이', value: '_user', sortable: false },
+        { text: '조회수', value: 'cnt.view', sortable: true },
+        { text: '추천', value: 'cnt.like', sortable: true }
+      ],
+      loading: false,
+      pagination: {},
+      getTotalPage: 1
     }
   },
   mounted () {
@@ -147,18 +176,26 @@ export default {
         })
     },
     list () {
+      if (this.loading) return
+      this.loading = true
       this.$axios.get(`article/${this.board._id}`)
         .then(({ data }) => {
           this.articles = data.ds
+          this.loading = false
         })
         .catch((e) => {
           this.pop(e.message, 'error')
+          this.loading = false
         })
     },
     pop (m, c) {
       this.sb.act = true
       this.sb.msg = m
       this.sb.color = c
+    },
+    id2date (val) {
+      if (!val) return '잘못된 시간 정보'
+      return new Date(parseInt(val.substring(0, 8), 16) * 1000).toLocaleString()
     }
   }
 }
