@@ -96,6 +96,19 @@ export default {
       siteCopyRight: '2020 JH',
       siteDark: false,
       items: [{
+        icon: 'chat',
+        title: '게시판',
+        active: true,
+        subItem: [
+          {
+            title: '아무나',
+            to: {
+              path: '/'
+            }
+          }
+        ]
+      },
+      {
         icon: 'pan_tool',
         title: '레벨테스트',
         active: true,

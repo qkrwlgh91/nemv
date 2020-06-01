@@ -78,7 +78,7 @@ export default {
           console.log(r.data)
           localStorage.setItem('token', r.data.token)
           this.$store.commit('getToken', r.data.user)
-          this.$router.push('/')
+          this.$router.push('/test/lv0')
           // location.href('/header')
         })
         .catch(e => console.error(e.message))

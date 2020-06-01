@@ -38,14 +38,16 @@ axios.interceptors.response.use(function (response) {
 
 const pageCheck = (to, from, next) => {
 // return next()
-  axios.post(`${apiRootPath}page`, { name: to.path.replace('/', '') }, { headers: { Authorization: localStorage.getItem('token') } })
+  // axios.post(`${apiRootPath}page`, { name: to.path.replace('/', '') }, { headers: { Authorization: localStorage.getItem('token') } })
+  axios.post('page', { name: to.path })
     .then((r) => {
       if (!r.data.success) throw new Error(r.data.msg)
       next()
     })
     .catch((e) => {
       console.error(e.message)
-      next(`/block/${e.message}`)
+      // next(`/block/${e.message}`)
+      next(`/block/${e.message.replace(/\//gi, ' ')}`)
     })
 }
 
@@ -53,6 +55,12 @@ export default new VueRouter({
   mode: 'history',
   base: process.env.BASE_URL,
   routes: [
+    {
+      path: '/',
+      name: 'boardAnyone',
+      component: () => import('../views/board/anyone'),
+      beforeEnter: pageCheck
+    },
     {
       path: '/test/lv0',
       name: 'testLv0',
