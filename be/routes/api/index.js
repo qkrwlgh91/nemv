@@ -21,7 +21,7 @@ const verifyToken = (t) => {
   })
 }
 
-const signToken = (id, lv, name, exp) => {
+const signToken = (_id, id, lv, name, exp) => {
   return new Promise((resolve, rejet) => {
     const o = {
       issuer: cfg.jwt.issuer,
@@ -32,7 +32,7 @@ const signToken = (id, lv, name, exp) => {
     }
     // if (rmb) o.expiresIn = cfg.jwt.expiresInRemember // 7일
     // jwt.sign({ id, lv, name, rmb }, cfg.jwt.secretKey, o, (err, token) => {
-    jwt.sign({ id, lv, name }, cfg.jwt.secretKey, o, (err, token) =>  {
+    jwt.sign({ _id, id, lv, name }, cfg.jwt.secretKey, o, (err, token) =>  {
       if (err) reject(err)
       resolve(token)
     })
@@ -48,7 +48,7 @@ const getToken = async(t) => {
   const expSec = (vt.exp - vt.iat)
   if (diff > expSec / cfg.jwt.expiresInDiv) return { user: vt, token: null }
 
-  const nt = await signToken(vt.id, vt.lv, vt.name, expSec)
+  const nt = await signToken(vt._id, vt.id, vt.lv, vt.name, expSec)
   vt = await verifyToken(nt)
   return { user: vt, token: nt }
 }
@@ -66,8 +66,8 @@ router.all('*', function(req, res, next) {
 });
 
 router.use('/page', require('./page'))
-
 router.use('/board', require('./board'))
+router.use('/article', require('./article'))
 router.use('/manage', require('./manage'))
 
 // router.use('/test', require('./test'))
