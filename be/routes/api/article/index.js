@@ -30,12 +30,13 @@ router.post('/:_board', (req, res, next) => {
     })
 })
 
-router.get('/:_board', (req, res, next) => {
+router.get('/list/:_board', (req, res, next) => {
   const _board = req.params._board
 
-  // const f = {}
-  // if (_board) f._board = _board
-  Article.find({ _board }).populate('_user', '-pwd')
+  const f = {}
+  if (_board) f._board = _board
+
+  Article.find(f).select('-content').populate('_user', '-pwd')
     .then(rs => {
       res.send({ success: true, ds: rs, token: req.token })
     })
@@ -43,6 +44,18 @@ router.get('/:_board', (req, res, next) => {
       res.send({ success: false, msg: e.message })
     })
 });
+
+router.get('/read/:_id', (req, res, next) => {
+  const _id = req.params._id
+
+  Article.findById(_id).select('content')
+    .then(r => {
+      res.send({ success: true, d: r, token: req.token })
+    })
+    .catch(e => {
+      res.send({ success: false, msg: e.message })
+    })
+})
 
 router.put('/:_id', (req, res, next) => {
   if (!req.user._id) return res.send({ success: false, msg: '손님은 수정이 안돼요' })

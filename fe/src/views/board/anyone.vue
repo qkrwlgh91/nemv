@@ -11,17 +11,17 @@
             <v-container fill-height fluid>
               <v-row fill-height>
                 <v-col xs="6" align-end flexbox>
-                  <span class="headline">{{board.name}}</span>
+                  <span class="headline">{{ board.name }}</span>
                 </v-col>
-                <v-col s="6" align-end flexbox>
-                  <span>{{board.rmk}}</span>
+                <v-col xs="6" align-end flexbox class="text-xs-right">
+                  <span>{{ board.rmk }}</span>
                 </v-col>
               </v-row>
             </v-container>
           </v-img>
         </v-card>
       </v-col>
-      <!-- <v-col xs="12" sm="6" md="4" v-for="article in articles" :key="article._id">
+      <!-- <v-col xs12 sm6 md4 v-for="article in articles" :key="article._id">
         {{article}}
       </v-col> -->
       <v-col xs="12">
@@ -32,12 +32,11 @@
           footer-props.items-per-page-text=""
           :loading="loading"
           class="text-no-wrap"
-          sort-by
-          >
+          sort-by>
           <template slot="items" slot-scope="props">
-            <td :class="headers[0].class">{{ id2date(props.item._id) }}</td>
-            <td :class="headers[1].class">{{ props.item.title }}</td>
-            <td :class="headers[2].class">{{ props.item._user ? props.item._user.name : '손님' }}</td>
+            <td :class="headers[0].class">{{ id2date(props.item._id)}}</td>
+            <td :class="headers[1].class"><a @click="read(props.item)"> {{ props.item.title }}</a></td>
+            <td :class="headers[2].class">{{ props.item._user ? props.item._user.id : '손님' }}</td>
             <td :class="headers[3].class">{{ props.item.cnt.view }}</td>
             <td :class="headers[4].class">{{ props.item.cnt.like }}</td>
           </template>
@@ -58,14 +57,37 @@
       <v-icon>add</v-icon>
     </v-btn>
     <v-dialog v-model="dialog" persistent max-width="500px">
-      <v-card>
+      <v-card v-if="!dlMode">
         <v-card-title>
-          <span class="headline">글 작성</span>
+          <span class="headline">{{selArticle.title}}</span>
+        </v-card-title>
+        <v-card-text>
+          {{selArticle.content}}
+        </v-card-text>
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn color="warning darken-1" flat @click.native="modDialog()">수정</v-btn>
+          <v-btn color="error darken-1" flat @click.native="ca=true">삭제</v-btn>
+          <v-btn color="secondary darken-1" flat @click.native="dialog = false">닫기</v-btn>
+        </v-card-actions>
+        <v-card-text>
+          <v-card-text v-if="ca">
+            <v-alert v-model="ca" type="warning">
+              <h4>정말 진행 하시겠습니까?</h4>
+              <v-btn color="error" @click="del()">확인</v-btn>
+              <v-btn color="secondary" @click="ca=false">취소</v-btn>
+            </v-alert>
+          </v-card-text>
+        </v-card-text>
+      </v-card>
+      <v-card v-else>
+        <v-card-title>
+          <span class="headline">글 {{(dlMode === 1) ? '작성' : '수정'}}</span>
         </v-card-title>
         <v-card-text>
           <v-container grid-list-md>
             <v-row wrap>
-              <v-col xs="12">
+              <v-col xs12>
                 <v-text-field
                   label="제목"
                   persistent-hint
@@ -73,7 +95,7 @@
                   v-model="form.title"
                 ></v-text-field>
               </v-col>
-              <v-col xs="12">
+              <v-col xs12>
                 <v-textarea
                   label="내용"
                   persistent-hint
@@ -86,7 +108,7 @@
         </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn color="green darken-1" text @click="add()">확인</v-btn>
+          <v-btn color="green darken-1" text @click="(dlMode === 1) ? add() : mod()">확인</v-btn>
           <v-btn color="red darken-1" text @click.native="dialog = false">취소</v-btn>
         </v-card-actions>
       </v-card>
@@ -97,7 +119,7 @@
       {{ sb.msg }}
       <v-btn
         :color="sb.color"
-        text
+        flat
         @click="sb.act = false"
       >
         닫기
@@ -105,10 +127,8 @@
     </v-snackbar>
   </v-container>
 </template>
-
 <script>
 // import boardCard from '@/components/manage/boardCard'
-
 export default {
   // components: { boardCard },
   data () {
@@ -131,14 +151,17 @@ export default {
       },
       headers: [
         { text: '날짜', value: '_id', sortable: true, class: 'hidden-sm-and-down' },
-        { text: '제목', value: 'title', sortable: true },
+        { text: '제목', value: 'title', sortable: true, align: 'left' },
         { text: '글쓴이', value: '_user', sortable: false },
         { text: '조회수', value: 'cnt.view', sortable: true },
         { text: '추천', value: 'cnt.like', sortable: true }
       ],
       loading: false,
       pagination: {},
-      getTotalPage: 1
+      getTotalPage: 1,
+      dlMode: 0, // 0: read, 1: write, 2: modify
+      selArticle: {},
+      ca: false
     }
   },
   mounted () {
@@ -147,9 +170,17 @@ export default {
   methods: {
     addDialog () {
       this.dialog = true
+      this.dlMode = 1
       this.form = {
         title: '',
         content: ''
+      }
+    },
+    modDialog () {
+      this.dlMode = 2
+      this.form = {
+        title: this.selArticle.title,
+        content: this.selArticle.content
       }
     },
     get () {
@@ -167,7 +198,8 @@ export default {
       if (!this.form.title) return this.pop('제목을 작성해주세요', 'warning')
       if (!this.form.content) return this.pop('내용을 작성해주세요', 'warning')
       this.$axios.post(`article/${this.board._id}`, this.form)
-        .then((r) => {
+        .then(({ data }) => {
+          if (!data.success) throw new Error(data.msg)
           this.dialog = false
           this.list()
         })
@@ -178,14 +210,59 @@ export default {
     list () {
       if (this.loading) return
       this.loading = true
-      this.$axios.get(`article/${this.board._id}`)
+      this.$axios.get(`article/list/${this.board._id}`)
         .then(({ data }) => {
+          if (!data.success) throw new Error(data.msg)
           this.articles = data.ds
           this.loading = false
         })
         .catch((e) => {
           this.pop(e.message, 'error')
           this.loading = false
+        })
+    },
+    read (atc) {
+      this.selArticle = atc
+      this.loading = true
+      this.$axios.get(`article/read/${atc._id}`)
+        .then(({ data }) => {
+          if (!data.success) throw new Error(data.msg)
+          this.dlMode = 0
+          this.dialog = true
+          this.selArticle.content = data.d.content
+          this.selArticle.cnt.view = data.d.cnt.view
+          this.loading = false
+        })
+        .catch((e) => {
+          this.pop(e.message, 'error')
+          this.loading = false
+        })
+    },
+    mod () {
+      if (!this.form.title) return this.pop('제목을 작성해주세요', 'warning')
+      if (!this.form.content) return this.pop('내용을 작성해주세요', 'warning')
+      if (this.selArticle.title === this.form.title && this.selArticle.content === this.form.content) return this.pop('변경된 내용이 없습니다', 'warning')
+      this.$axios.put(`article/${this.selArticle._id}`, this.form)
+        .then(({ data }) => {
+          this.dialog = false
+          if (!data.success) throw new Error(data.msg)
+          this.selArticle.title = data.d.title
+          this.selArticle.content = data.d.content
+          // this.list()
+        })
+        .catch((e) => {
+          this.pop(e.message, 'error')
+        })
+    },
+    del () {
+      this.$axios.delete(`article/${this.selArticle._id}`)
+        .then(({ data }) => {
+          this.dialog = false
+          if (!data.success) throw new Error(data.msg)
+          this.list()
+        })
+        .catch((e) => {
+          this.pop(e.message, 'error')
         })
     },
     pop (m, c) {
