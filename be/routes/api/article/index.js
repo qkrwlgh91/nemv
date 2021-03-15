@@ -36,7 +36,7 @@ router.get('/list/:_board', (req, res, next) => {
   const f = {}
   if (_board) f._board = _board
 
-  Article.find(f).select('-content').populate('_user', '-pwd')
+  Article.find(f).select('_content').populate('_user', '-pwd')
     .then(rs => {
       res.send({ success: true, ds: rs, token: req.token })
     })
