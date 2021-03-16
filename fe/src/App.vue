@@ -190,6 +190,10 @@ export default {
   },
   mounted () {
     this.getSite()
+    console.log('mounted가 먼저?')
+  },
+  created () {
+    console.log('created 가 먼저?')
   },
   methods: {
     getSite () {
