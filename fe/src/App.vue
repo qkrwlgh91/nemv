@@ -140,6 +140,13 @@ export default {
             to: {
               path: '/test/lv0'
             }
+          },
+          {
+            icon: 'motorcycle',
+            title: '뷰 드래그 테스트',
+            to: {
+              path: '/test/vuedragTest'
+            }
           }
         ]
       },
