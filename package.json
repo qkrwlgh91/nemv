@@ -8,7 +8,7 @@
     "pm2": "cd fe && yarn && yarn build && cd ../be && yarn && cd .. && pm2 start --env pr"
   },
   "dependencies": {
-    "moment": "^2.26.0",
+    "moment": "^2.29.4",
     "vuedraggable": "^2.24.3"
   }
 }
